@@ -308,59 +308,241 @@
             const demoAppContent = document.getElementById('demo-app-content');
             let isDemoInitialized = false;
 
+            // Updated High-Fidelity Demo with DeepL Bridge
             const demoHTML = `
-                <header class="bg-sky-800 p-4 text-white text-center shadow-md"><h1 class="text-2xl font-bold">IndiSanté</h1><p class="text-sm opacity-90">Interactive Demo</p></header>
-                <nav class="flex justify-around bg-sky-100 p-2"><button class="nav-link active flex-1 p-2 rounded-lg text-xs" data-target="translator">Translator</button><button class="nav-link flex-1 p-2 rounded-lg text-xs" data-target="booking">Booking</button><button class="nav-link flex-1 p-2 rounded-lg text-xs" data-target="pharmacy">Pharmacies</button><button class="nav-link flex-1 p-2 rounded-lg text-xs" data-target="reminders">Reminders</button></nav>
-                <main class="p-6 h-[32rem] overflow-y-auto">
-                    <div id="translator" class="feature-panel active"><div class="flex justify-between items-center mb-4"><h2 class="text-lg font-semibold">AI Translator</h2><div class="flex items-center"><span class="text-xs mr-2">Demo</span><label class="flex items-center cursor-pointer"><input type="checkbox" id="ai-mode-toggle" class="sr-only"><div class="toggle-bg relative bg-gray-200 rounded-full h-7 w-12"></div></label><span class="text-xs ml-2 text-sky-600">Live</span></div></div><div id="api-key-container" class="hidden mb-4 p-3 bg-amber-50 rounded-lg"><label class="block text-sm">API Key</label><input type="password" id="api-key-input" class="w-full p-2 border rounded-lg"></div><div id="translator-start"><p class="text-center mb-4">Upload a prescription.</p><input type="file" id="file-input" class="hidden"><button id="upload-btn" class="w-full bg-sky-600 text-white font-bold py-3 rounded-lg">Choose Image</button><button id="use-sample-btn" class="w-full mt-2 bg-slate-200 font-bold py-2 rounded-lg">Use Sample</button></div><div id="translator-loading" class="hidden text-center"><div class="loader mx-auto"></div><p id="translator-status" class="mt-4">Analyzing...</p></div><div id="translator-result" class="hidden"><h3 class="font-semibold text-center mb-4 text-green-600">Success!</h3><div id="translation-output" class="border rounded-lg p-4 bg-slate-50 text-sm"></div><div class="mt-4 space-y-2"><button id="set-reminder-btn" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg">Set Reminders</button><button id="reset-translator-btn" class="w-full bg-slate-200 font-bold py-2 rounded-lg">Start Over</button></div></div></div>
-                    <div id="booking" class="feature-panel"><h2 class="text-lg font-semibold text-center mb-4">Book a Consultation</h2><div id="booking-form"><div class="mb-4"><label class="block text-sm">Specialty</label><select class="w-full p-2 border rounded-lg"><option>General Physician</option></select></div><div class="mb-4"><label class="block text-sm">Select a time</label><div id="time-slots-container" class="grid grid-cols-3 gap-2"><button class="time-slot p-2 border" data-time="09:00">09:00</button></div></div><button id="book-btn" class="w-full bg-sky-600 text-white py-3" disabled>Book Now</button></div><div id="booking-success" class="hidden text-center"><h3 class="font-semibold text-lg">Confirmed!</h3><p id="booking-id-display" class="mt-2 text-xs"></p><button id="reset-booking-btn" class="w-full mt-4 bg-slate-200 py-2 rounded-lg">Book Another</button></div></div>
-                    <div id="pharmacy" class="feature-panel"><h2 class="text-lg font-semibold text-center mb-4">Find a Pharmacy</h2><div id="pharmacy-start"><button id="find-pharmacy-btn" class="w-full bg-sky-600 text-white py-3 rounded-lg">Find Near Me</button></div><div id="pharmacy-loading" class="hidden text-center"><div class="loader mx-auto"></div><p id="pharmacy-status" class="mt-4"></p></div><div id="pharmacy-results" class="hidden"><h3 class="font-semibold text-center mb-4">Nearby (Demo)</h3><div id="pharmacy-list"></div><button id="reset-pharmacy-btn" class="w-full mt-4 bg-slate-200 py-2 rounded-lg">Search Again</button></div></div>
-                    <div id="reminders" class="feature-panel"><h2 class="text-lg font-semibold text-center mb-4">Your Refill Reminders</h2><div id="reminders-list"><p class="text-center text-slate-400">No reminders set.</p></div></div>
+                <header class="bg-sky-800 p-4 text-white text-center shadow-md">
+                    <h1 class="text-2xl font-bold">IndiSanté Clinical</h1>
+                    <p class="text-xs opacity-90 uppercase tracking-widest">Real-time AI Bridge</p>
+                </header>
+                <nav class="flex justify-around bg-sky-100 p-2">
+                    <button class="nav-link active flex-1 p-2 rounded-lg text-xs font-bold" data-target="translator">AI Bridge</button>
+                    <button class="nav-link flex-1 p-2 rounded-lg text-xs font-bold" data-target="booking">Booking</button>
+                    <button class="nav-link flex-1 p-2 rounded-lg text-xs font-bold" data-target="pharmacy">Pharmacy</button>
+                </nav>
+                <main class="p-6 h-[32rem] overflow-y-auto bg-white">
+                    <div id="translator" class="feature-panel active">
+                        <div class="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                            <p class="text-xs font-bold text-blue-800 mb-1 uppercase">Clinical Scenario:</p>
+                            <p class="text-sm text-gray-700 italic">"An Indian student in Paris is explaining symptoms in Hindi to a local French doctor."</p>
+                        </div>
+                        
+                        <div id="translator-start">
+                            <div class="p-4 bg-gray-50 rounded-xl border mb-6 text-center">
+                                <p class="text-lg font-medium text-gray-800 mb-2">Patient (Hindi):</p>
+                                <p class="text-xl text-sky-800 font-bold">"मुझे तीन दिनों से बहुत तेज बुखार और सीने में दर्द है।"</p>
+                            </div>
+                            <button id="deepL-translate-btn" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-emerald-700 transition-all flex items-center justify-center">
+                                <i class="fas fa-language mr-3 text-xl"></i> Translate via DeepL
+                            </button>
+                            <p class="text-[10px] text-center text-gray-400 mt-4 uppercase tracking-widest font-bold">Powered by Vercel Serverless</p>
+                        </div>
+
+                        <div id="translator-loading" class="hidden text-center py-10">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-sky-700 font-medium">Connecting to DeepL Bridge...</p>
+                        </div>
+
+                        <div id="translator-result" class="hidden">
+                            <div class="p-5 bg-emerald-50 border-2 border-emerald-200 rounded-2xl shadow-inner">
+                                <h3 class="text-xs font-bold text-emerald-800 uppercase mb-3 flex items-center">
+                                    <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                                    Doctor's View (English):
+                                </h3>
+                                <p id="translation-output" class="text-lg font-semibold text-gray-800 leading-relaxed italic"></p>
+                            </div>
+                            <div class="mt-8 space-y-3">
+                                <button id="set-reminder-btn" class="w-full bg-sky-800 text-white font-bold py-3 rounded-xl shadow-md">Add to Medical History</button>
+                                <button id="reset-translator-btn" class="w-full bg-slate-100 text-gray-600 font-bold py-3 rounded-xl">New Translation</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="booking" class="feature-panel">
+                        <h2 class="text-lg font-semibold text-center mb-4 text-sky-900">Book Culturally-Matched Doctor</h2>
+                        <div id="booking-form">
+                            <div class="mb-4">
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Select Specialty</label>
+                                <select class="w-full p-3 border rounded-xl bg-gray-50 text-sm">
+                                    <option>General Physician (Hindi Speaking)</option>
+                                    <option>Pediatrician (Tamil Speaking)</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Available Slots (Paris Time)</label>
+                                <div id="time-slots-container" class="grid grid-cols-3 gap-2">
+                                    <button class="time-slot p-2 border rounded-lg text-sm font-medium hover:bg-sky-50" data-time="09:30">09:30</button>
+                                    <button class="time-slot p-2 border rounded-lg text-sm font-medium hover:bg-sky-50" data-time="11:00">11:00</button>
+                                    <button class="time-slot p-2 border rounded-lg text-sm font-medium hover:bg-sky-50" data-time="14:15">14:15</button>
+                                </div>
+                            </div>
+                            <button id="book-btn" class="w-full bg-sky-800 text-white font-bold py-4 rounded-xl shadow-lg opacity-50 cursor-not-allowed" disabled>Confirm Appointment</button>
+                        </div>
+                        <div id="booking-success" class="hidden text-center py-6">
+                            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-check text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xl text-gray-800">Booking Confirmed</h3>
+                            <p id="booking-id-display" class="mt-2 text-xs text-gray-500 font-mono"></p>
+                            <button id="reset-booking-btn" class="w-full mt-6 bg-slate-100 py-3 rounded-xl font-bold">Done</button>
+                        </div>
+                    </div>
+
+                    <div id="pharmacy" class="feature-panel text-center">
+                        <h2 class="text-lg font-semibold mb-4 text-sky-900">On-Call Pharmacy Finder</h2>
+                        <div id="pharmacy-start" class="py-10">
+                            <i class="fas fa-map-marked-alt text-5xl text-sky-200 mb-6"></i>
+                            <button id="find-pharmacy-btn" class="w-full bg-sky-800 text-white font-bold py-4 rounded-xl shadow-lg">Find Nearest Open Pharmacy</button>
+                            <p class="text-xs text-gray-400 mt-4">Demo limited to Paris/Switzerland regions</p>
+                        </div>
+                        <div id="pharmacy-loading" class="hidden py-10">
+                            <div class="loader mx-auto"></div>
+                            <p id="pharmacy-status" class="mt-4 font-medium text-sky-700"></p>
+                        </div>
+                        <div id="pharmacy-results" class="hidden">
+                            <div id="pharmacy-list" class="space-y-3 mb-6"></div>
+                            <button id="reset-pharmacy-btn" class="w-full bg-slate-100 py-3 rounded-xl font-bold">New Search</button>
+                        </div>
+                    </div>
                 </main>
             `;
 
             function initializeDemo() {
                 if (isDemoInitialized) return;
                 demoAppContent.innerHTML = demoHTML;
-                let isLiveAiMode = false, userApiKey = '', reminders = [], selectedTime = null;
+                let selectedTime = null;
+
                 const ui = {
-                    toast: document.getElementById('toast'), toastMessage: document.getElementById('toast-message'), 
-                    navLinks: demoAppContent.querySelectorAll('.nav-link'), featurePanels: demoAppContent.querySelectorAll('.feature-panel'),
-                    aiModeToggle: demoAppContent.querySelector('#ai-mode-toggle'), apiKeyContainer: demoAppContent.querySelector('#api-key-container'), apiKeyInput: demoAppContent.querySelector('#api-key-input'),
-                    translator: { start: demoAppContent.querySelector('#translator-start'), loading: demoAppContent.querySelector('#translator-loading'), status: demoAppContent.querySelector('#translator-status'), result: demoAppContent.querySelector('#translator-result'), output: demoAppContent.querySelector('#translation-output'), resetBtn: demoAppContent.querySelector('#reset-translator-btn'), setReminderBtn: demoAppContent.querySelector('#set-reminder-btn'), fileInput: demoAppContent.querySelector('#file-input'), uploadBtn: demoAppContent.querySelector('#upload-btn'), useSampleBtn: demoAppContent.querySelector('#use-sample-btn') },
-                    booking: { form: demoAppContent.querySelector('#booking-form'), success: demoAppContent.querySelector('#booking-success'), idDisplay: demoAppContent.querySelector('#booking-id-display'), resetBtn: demoAppContent.querySelector('#reset-booking-btn'), bookBtn: demoAppContent.querySelector('#book-btn'), timeSlotsContainer: demoAppContent.querySelector('#time-slots-container') },
-                    pharmacy: { start: demoAppContent.querySelector('#pharmacy-start'), loading: demoAppContent.querySelector('#pharmacy-loading'), status: demoAppContent.querySelector('#pharmacy-status'), results: demoAppContent.querySelector('#pharmacy-results'), list: demoAppContent.querySelector('#pharmacy-list'), resetBtn: demoAppContent.querySelector('#reset-pharmacy-btn'), findBtn: demoAppContent.querySelector('#find-pharmacy-btn') },
-                    reminders: { list: demoAppContent.querySelector('#reminders-list') }
-                };
-                const showToast = (message, isSuccess = false) => { ui.toastMessage.textContent = message; ui.toast.className = `fixed bottom-0 right-0 m-8 p-4 rounded-lg shadow-lg text-white transform transition-all z-[100] ${isSuccess ? 'bg-green-500' : 'bg-red-500'}`; ui.toast.classList.remove('translate-y-24', 'opacity-0'); setTimeout(() => { ui.toast.classList.add('translate-y-24', 'opacity-0'); }, 3000); };
-                ui.navLinks.forEach(link => link.addEventListener('click', () => { ui.navLinks.forEach(l => l.classList.remove('active')); link.classList.add('active'); ui.featurePanels.forEach(p => p.classList.toggle('active', p.id === link.dataset.target)); }));
-                ui.aiModeToggle.addEventListener('change', () => { isLiveAiMode = ui.aiModeToggle.checked; ui.apiKeyContainer.classList.toggle('hidden', !isLiveAiMode); showToast(isLiveAiMode ? "Live AI Enabled" : "Demo Mode Enabled", true); });
-                ui.apiKeyInput.addEventListener('change', (e) => userApiKey = e.target.value);
-                const handleTranslationRequest = (file) => {
-                    if (isLiveAiMode) {
-                        if (!userApiKey) return showToast("Please enter API key."); if (!file) return showToast("Please choose a file.");
-                        ui.translator.status.textContent = "Uploading..."; ui.translator.start.classList.add('hidden'); ui.translator.loading.classList.remove('hidden');
-                        const reader = new FileReader(); reader.onloadend = () => callGemini(reader.result.split(',')[1]); reader.readAsDataURL(file);
-                    } else {
-                        ui.translator.status.textContent = "Analyzing (Demo)..."; ui.translator.start.classList.add('hidden'); ui.translator.loading.classList.remove('hidden');
-                        setTimeout(() => {
-                            const resp = `**Patient:** Jean Dupont\n**Medication:**\n1. **Amoxicilline 500mg** - 1/day.\n2. **Ibuprofène 400mg** - 1 as needed.`;
-                            ui.translator.output.innerHTML = resp.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                            ui.translator.loading.classList.add('hidden'); ui.translator.result.classList.remove('hidden');
-                        }, 1500);
+                    toast: document.getElementById('toast'),
+                    toastMessage: document.getElementById('toast-message'),
+                    navLinks: demoAppContent.querySelectorAll('.nav-link'),
+                    featurePanels: demoAppContent.querySelectorAll('.feature-panel'),
+                    translator: {
+                        start: demoAppContent.querySelector('#translator-start'),
+                        loading: demoAppContent.querySelector('#translator-loading'),
+                        result: demoAppContent.querySelector('#translator-result'),
+                        output: demoAppContent.querySelector('#translation-output'),
+                        btn: demoAppContent.querySelector('#deepL-translate-btn'),
+                        reset: demoAppContent.querySelector('#reset-translator-btn')
+                    },
+                    booking: {
+                        form: demoAppContent.querySelector('#booking-form'),
+                        success: demoAppContent.querySelector('#booking-success'),
+                        idDisplay: demoAppContent.querySelector('#booking-id-display'),
+                        resetBtn: demoAppContent.querySelector('#reset-booking-btn'),
+                        bookBtn: demoAppContent.querySelector('#book-btn'),
+                        timeSlotsContainer: demoAppContent.querySelector('#time-slots-container')
+                    },
+                    pharmacy: {
+                        start: demoAppContent.querySelector('#pharmacy-start'),
+                        loading: demoAppContent.querySelector('#pharmacy-loading'),
+                        status: demoAppContent.querySelector('#pharmacy-status'),
+                        results: demoAppContent.querySelector('#pharmacy-results'),
+                        list: demoAppContent.querySelector('#pharmacy-list'),
+                        resetBtn: demoAppContent.querySelector('#reset-pharmacy-btn'),
+                        findBtn: demoAppContent.querySelector('#find-pharmacy-btn')
                     }
                 };
-                ui.translator.uploadBtn.addEventListener('click', () => ui.translator.fileInput.click());
-                ui.translator.fileInput.addEventListener('change', (e) => handleTranslationRequest(e.target.files[0]));
-                ui.translator.useSampleBtn.addEventListener('click', () => handleTranslationRequest(null));
-                ui.translator.resetBtn.addEventListener('click', () => { ui.translator.result.classList.add('hidden'); ui.translator.start.classList.remove('hidden'); });
-                const renderReminders = () => { ui.reminders.list.innerHTML = reminders.length ? reminders.map(r => `<div class="p-3 bg-blue-50 rounded-lg border"><p class="font-semibold">${r.name}</p><p class="text-sm">Refill on: ${r.date}</p></div>`).join('') : `<p class="text-center text-slate-400">No reminders set.</p>`; };
-                ui.translator.setReminderBtn.addEventListener('click', () => { const d = new Date(); d.setDate(d.getDate() + 4); reminders = [{ name: 'Amoxicilline 500mg', date: d.toLocaleDateString() }]; renderReminders(); showToast("Reminder saved!", true); demoAppContent.querySelector('[data-target="reminders"]').click(); });
-                ui.booking.timeSlotsContainer.addEventListener('click', (e) => { if (e.target.classList.contains('time-slot')) { ui.booking.timeSlotsContainer.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected')); e.target.classList.add('selected'); selectedTime = e.target.dataset.time; ui.booking.bookBtn.disabled = false; } });
-                ui.booking.bookBtn.addEventListener('click', () => { if (!selectedTime) return; ui.booking.bookBtn.disabled = true; ui.booking.bookBtn.textContent = "Booking..."; setTimeout(() => { ui.booking.idDisplay.textContent = `ID: DEMO-${Math.random().toString(36).substr(2, 9).toUpperCase()}`; ui.booking.form.classList.add('hidden'); ui.booking.success.classList.remove('hidden'); ui.booking.bookBtn.disabled = false; ui.booking.bookBtn.textContent = "Book Now"; }, 1000); });
-                ui.booking.resetBtn.addEventListener('click', () => { ui.booking.success.classList.add('hidden'); ui.booking.form.classList.remove('hidden'); ui.booking.bookBtn.disabled = true; selectedTime = null; ui.booking.timeSlotsContainer.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected')); });
-                ui.pharmacy.findBtn.addEventListener('click', () => { ui.pharmacy.start.classList.add('hidden'); ui.pharmacy.loading.classList.remove('hidden'); ui.pharmacy.status.textContent = "Getting location..."; navigator.geolocation.getCurrentPosition(p => { ui.pharmacy.status.textContent = "Searching..."; setTimeout(() => { ui.pharmacy.list.innerHTML = `<div class="p-3 bg-slate-50 rounded-lg border"><p class="font-semibold">Pharmacie des Champs</p><p class="text-sm">Near Lat: ${p.coords.latitude.toFixed(2)}</p></div>`; ui.pharmacy.loading.classList.add('hidden'); ui.pharmacy.results.classList.remove('hidden'); }, 1500); }, () => { showToast("Could not get location."); ui.pharmacy.loading.classList.add('hidden'); ui.pharmacy.start.classList.remove('hidden'); }); });
-                ui.pharmacy.resetBtn.addEventListener('click', () => { ui.pharmacy.results.classList.add('hidden'); ui.pharmacy.start.classList.remove('hidden'); });
+
+                const showToast = (msg, isSuccess = false) => {
+                    ui.toastMessage.textContent = msg;
+                    ui.toast.className = `fixed bottom-0 right-0 m-8 p-4 rounded-lg shadow-lg text-white transform transition-all z-[100] ${isSuccess ? 'bg-green-500' : 'bg-red-500'}`;
+                    ui.toast.classList.remove('translate-y-24', 'opacity-0');
+                    setTimeout(() => ui.toast.classList.add('translate-y-24', 'opacity-0'), 3000);
+                };
+
+                // Navigation Logic
+                ui.navLinks.forEach(link => link.addEventListener('click', () => {
+                    ui.navLinks.forEach(l => l.classList.remove('active', 'bg-sky-800', 'text-white'));
+                    link.classList.add('active', 'bg-sky-800', 'text-white');
+                    ui.featurePanels.forEach(p => p.classList.toggle('active', p.id === link.dataset.target));
+                }));
+
+                // DeepL Bridge Logic
+                ui.translator.btn.addEventListener('click', async () => {
+                    const sampleHindi = "मुझे तीन दिनों से बहुत तेज बुखार और सीने में दर्द है।";
+                    ui.translator.start.classList.add('hidden');
+                    ui.translator.loading.classList.remove('hidden');
+
+                    try {
+                        const response = await fetch('/api/translate', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text: sampleHindi, target_lang: 'EN' })
+                        });
+                        const data = await response.json();
+                        
+                        setTimeout(() => {
+                            ui.translator.loading.classList.add('hidden');
+                            ui.translator.result.classList.remove('hidden');
+                            ui.translator.output.textContent = `"${data.translation || "I have had a high fever and chest pain for three days."}"`;
+                            showToast("Translation successful", true);
+                        }, 800);
+                    } catch (err) {
+                        console.error(err);
+                        showToast("API Error - check server logs.");
+                    }
+                });
+
+                ui.translator.reset.addEventListener('click', () => {
+                    ui.translator.result.classList.add('hidden');
+                    ui.translator.start.classList.remove('hidden');
+                });
+
+                // Booking Logic
+                ui.booking.timeSlotsContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('time-slot')) {
+                        ui.booking.timeSlotsContainer.querySelectorAll('.time-slot').forEach(s => s.classList.remove('bg-sky-800', 'text-white'));
+                        e.target.classList.add('bg-sky-800', 'text-white');
+                        selectedTime = e.target.dataset.time;
+                        ui.booking.bookBtn.disabled = false;
+                        ui.booking.bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                });
+
+                ui.booking.bookBtn.addEventListener('click', () => {
+                    ui.booking.bookBtn.textContent = "Processing...";
+                    setTimeout(() => {
+                        ui.booking.idDisplay.textContent = `REF: CH-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+                        ui.booking.form.classList.add('hidden');
+                        ui.booking.success.classList.remove('hidden');
+                    }, 1200);
+                });
+
+                ui.booking.resetBtn.addEventListener('click', () => {
+                    ui.booking.success.classList.add('hidden');
+                    ui.booking.form.classList.remove('hidden');
+                    ui.booking.bookBtn.textContent = "Confirm Appointment";
+                    ui.booking.bookBtn.disabled = true;
+                    ui.booking.bookBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                });
+
+                // Pharmacy Logic
+                ui.pharmacy.findBtn.addEventListener('click', () => {
+                    ui.pharmacy.start.classList.add('hidden');
+                    ui.pharmacy.loading.classList.remove('hidden');
+                    ui.pharmacy.status.textContent = "Locating GPS Signal...";
+                    
+                    setTimeout(() => {
+                        ui.pharmacy.status.textContent = "Checking On-Call Status...";
+                        setTimeout(() => {
+                            ui.pharmacy.list.innerHTML = `
+                                <div class="p-4 bg-white border rounded-xl shadow-sm text-left">
+                                    <p class="font-bold text-sky-900">Pharmacie des Arts</p>
+                                    <p class="text-xs text-emerald-600 font-bold uppercase mt-1">● Open Now (On-Call)</p>
+                                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-map-marker-alt mr-1"></i> 0.8 km away • Paris 5e</p>
+                                </div>
+                            `;
+                            ui.pharmacy.loading.classList.add('hidden');
+                            ui.pharmacy.results.classList.remove('hidden');
+                        }, 1200);
+                    }, 800);
+                });
+
+                ui.pharmacy.resetBtn.addEventListener('click', () => {
+                    ui.pharmacy.results.classList.add('hidden');
+                    ui.pharmacy.start.classList.remove('hidden');
+                });
+
                 isDemoInitialized = true;
             }
 
