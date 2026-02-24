@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5VCGQS54');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Translator - IndiSanté</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-brand-color: #00806A;
+            --primary-brand-dark: #00594B;
+            --text-dark: #1F2937;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+        }
+        .brand-button {
+            background-color: var(--primary-brand-color);
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .brand-button:hover {
+            background-color: var(--primary-brand-dark);
+        }
+        .brand-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .loader {
+            border-top-color: var(--primary-brand-color);
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VCGQS54"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="https://raw.githubusercontent.com/HARIKAYADAVPARIS/INDISANTE-WEBISTE/main/IndiSante%CC%81%20Logo_%20Global%20Healthcare%20Connection.png" alt="IndiSanté Logo" class="h-10 w-auto">
+                <span class="text-2xl font-bold text-gray-800">IndiSanté</span>
+            </a>
+            <a href="index.html" class="hidden md:inline-block bg-emerald-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-emerald-700 transition-colors">Back to Main Site</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <div class="max-w-2xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-emerald-800">Prescription Translator</h1>
+            <p class="mt-4 text-xl text-gray-700">Powered by IndiSanté</p>
+            <p class="mt-4 text-gray-600">Upload an image or PDF of your prescription, and our AI will extract and translate the key information to help you understand it better at a local pharmacy.</p>
+        </div>
+
+        <div class="max-w-2xl mx-auto mt-12 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+            
+            <div id="upload-area">
+                <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-10">
+                    <i class="fas fa-file-arrow-up text-5xl text-gray-400"></i>
+                    <p class="mt-4 text-lg font-semibold text-gray-600">Choose a prescription image or PDF</p>
+                    <button id="upload-btn" class="mt-6 brand-button font-bold py-3 px-8 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform">
+                        Simulate Upload
+                    </button>
+                </div>
+            </div>
+
+            <div id="processing-area" class="hidden text-center">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mx-auto"></div>
+                <p id="processing-status" class="mt-4 text-lg font-semibold text-gray-700">Processing...</p>
+                <p class="text-sm text-gray-500">This is a simulation. A real translation would take a few moments.</p>
+            </div>
+
+            <div id="results-area" class="hidden">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Translated Prescription</h2>
+                <div class="mt-6 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <div class="grid grid-cols-2 gap-x-6">
+                        <div>
+                            <h3 class="font-bold text-lg text-emerald-700 border-b pb-2 mb-3">EU-Friendly Prescription</h3>
+                            <div class="space-y-3 text-sm">
+                                <div><strong class="text-gray-500 block">Name:</strong><span id="en-name"></span></div>
+                                <div><strong class="text-gray-500 block">Dosage:</strong><span id="en-dosage"></span></div>
+                                <div><strong class="text-gray-500 block">Frequency:</strong><span id="en-frequency"></span></div>
+                                <div><strong class="text-gray-500 block">Duration:</strong><span id="en-duration"></span></div>
+                                <div><strong class="text-gray-500 block">Note:</strong><span id="en-note"></span></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-emerald-700 border-b pb-2 mb-3">Ordonnance Traduite</h3>
+                            <div class="space-y-3 text-sm">
+                                <div><strong class="text-gray-500 block">Nom:</strong><span id="fr-name"></span></div>
+                                <div><strong class="text-gray-500 block">Dosage:</strong><span id="fr-dosage"></span></div>
+                                <div><strong class="text-gray-500 block">Fréquence:</strong><span id="fr-frequency"></span></div>
+                                <div><strong class="text-gray-500 block">Durée:</strong><span id="fr-duration"></span></div>
+                                <div><strong class="text-gray-500 block">Note:</strong><span id="fr-note"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="reset-btn" class="mt-6 w-full text-center text-emerald-600 font-semibold hover:underline">Translate another prescription</button>
+            </div>
+
+        </div>
+        <div class="text-center mt-6">
+            <p class="text-xs text-gray-500">Disclaimer: This tool is for informational purposes only and is not a substitute for professional medical advice or certified translation. Always verify with a pharmacist.</p>
+        </div>
+    </main>
+
+    <footer class="bg-white py-6 border-t mt-16">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 IndiSanté. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadArea = document.getElementById('upload-area');
+            const processingArea = document.getElementById('processing-area');
+            const resultsArea = document.getElementById('results-area');
+            const uploadBtn = document.getElementById('upload-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const processingStatus = document.getElementById('processing-status');
+
+            // --- Sample Data ---
+            const sampleData = {
+                en: { name: 'Paracetamol', dosage: '500 mg', frequency: '2 times per day', duration: 'As needed for pain', note: 'Available over-the-counter in France.' },
+                fr: { name: 'Paracétamol', dosage: '500 mg', frequency: '2 fois par jour', duration: 'Si nécessaire pour la douleur', note: 'Disponible sans ordonnance en France.' }
+            };
+
+            const fillResults = (data) => {
+                document.getElementById('en-name').textContent = data.en.name;
+                document.getElementById('en-dosage').textContent = data.en.dosage;
+                document.getElementById('en-frequency').textContent = data.en.frequency;
+                document.getElementById('en-duration').textContent = data.en.duration;
+                document.getElementById('en-note').textContent = data.en.note;
+
+                document.getElementById('fr-name').textContent = data.fr.name;
+                document.getElementById('fr-dosage').textContent = data.fr.dosage;
+                document.getElementById('fr-frequency').textContent = data.fr.frequency;
+                document.getElementById('fr-duration').textContent = data.fr.duration;
+                document.getElementById('fr-note').textContent = data.fr.note;
+            };
+
+            uploadBtn.addEventListener('click', () => {
+                uploadBtn.disabled = true;
+                uploadArea.classList.add('hidden');
+                processingArea.classList.remove('hidden');
+                resultsArea.classList.add('hidden');
+
+                // Simulate processing steps
+                setTimeout(() => {
+                    processingStatus.textContent = 'Uploading file...';
+                }, 0);
+
+                setTimeout(() => {
+                    processingStatus.textContent = 'Analyzing with OCR...';
+                }, 1500);
+                
+                setTimeout(() => {
+                    processingStatus.textContent = 'Identifying key terms...';
+                }, 3000);
+
+                setTimeout(() => {
+                    processingStatus.textContent = 'Translating...';
+                }, 4500);
+
+                setTimeout(() => {
+                    processingArea.classList.add('hidden');
+                    fillResults(sampleData);
+                    resultsArea.classList.remove('hidden');
+                    uploadBtn.disabled = false;
+                }, 6000);
+            });
+
+            resetBtn.addEventListener('click', () => {
+                resultsArea.classList.add('hidden');
+                processingStatus.textContent = 'Processing...';
+                uploadArea.classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

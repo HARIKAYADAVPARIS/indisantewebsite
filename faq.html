@@ -1,0 +1,154 @@
+Of course. Here is the complete code for the standalone `faq.html` page.
+
+As a reminder, this is the full, dedicated FAQ page. The "View All Questions" button on your homepage (`index.html`) should link to this file.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5VCGQS54');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - IndiSanté</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-brand-color: #00806A;
+            --text-dark: #1F2937;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VCGQS54"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="https://raw.githubusercontent.com/HARIKAYADAVPARIS/INDISANTE-WEBISTE/main/IndiSante%CC%81%20Logo_%20Global%20Healthcare%20Connection.png" alt="IndiSanté Logo" class="h-10 w-auto">
+                <span class="text-2xl font-bold text-gray-800">IndiSanté</span>
+            </a>
+            <a href="index.html" class="bg-[var(--primary-brand-color)] text-white font-semibold py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors">Back to Main Site</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-4">Frequently Asked Questions</h1>
+            <p class="text-center text-gray-600 text-lg mb-12">Have questions? We have answers. If you can't find what you're looking for, feel free to contact us.</p>
+
+            <div class="space-y-4">
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800">
+                        How does IndiSanté ensure the quality and cultural sensitivity of its doctors?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700 leading-relaxed">
+                        <p>We take this very seriously. Every doctor on our platform undergoes a rigorous, multi-stage vetting process led by our Chief Medical Officer. This includes:
+                        <ul class="list-disc pl-5 mt-2">
+                          <li><strong>Medical Credential Verification:</strong> We confirm that every doctor is fully licensed to practice in their respective European country.</li>
+                          <li><strong>Linguistic Proficiency Testing:</strong> We conduct practical tests to ensure fluency in the languages they claim to speak, including Hindi, Punjabi, and others.</li>
+                          <li><strong>Cultural Competency Interviews:</strong> We hold in-depth interviews to assess a doctor's experience and approach to treating patients from the Indian diaspora, focusing on empathy and understanding of cultural nuances in healthcare.</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800">
+                        Is my medical data safe and private?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700 leading-relaxed">
+                        <p>Absolutely. Protecting your data is our highest priority. Our platform is built to be compliant with the EU's General Data Protection Regulation (GDPR). All personal and medical data is encrypted, and we have strict internal policies to ensure that only authorized personnel can access information when necessary. Please see our <a href="privacy.html" class="text-emerald-600 hover:underline">Privacy Policy</a> for full details.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800">
+                        What should I do in a medical emergency?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700 leading-relaxed">
+                        <p><strong>IndiSanté is NOT for medical emergencies.</strong> If you are experiencing a life-threatening situation, such as severe chest pain, difficulty breathing, or serious injury, please contact your local emergency services immediately (for example, by dialing **112** in most European countries).</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800">
+                        Is this service covered by my health insurance?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700 leading-relaxed">
+                        <p>Initially, our service will be offered on a direct-to-consumer, self-pay basis. We provide clear, transparent pricing for our consultations. However, we are actively working to build partnerships with public and private health insurance providers across Europe to make our services eligible for coverage in the future.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800">
+                        How do prescriptions work?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700 leading-relaxed">
+                        <p>Doctors on our platform can issue electronic prescriptions when medically appropriate. Thanks to EU cross-border healthcare directives, a prescription issued by a doctor in one EU member state is generally valid in all others. We will provide you with a secure digital prescription that you can take to a local pharmacy in your country.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800">
+                        How does the service work?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700 leading-relaxed">
+                        <p>Our process is designed to be simple and stress-free:
+                        <ol class="list-decimal pl-5 mt-2">
+                          <li><strong>Triage:</strong> Start with our AI assistant or book directly.</li>
+                          <li><strong>Book:</strong> Choose a culturally-sensitive doctor who speaks your language and find a time that works for you.</li>
+                          <li><strong>Connect:</strong> Have your consultation via a secure video call from the comfort of your home.</li>
+                        </ol>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white mt-12 py-6 border-t">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>© 2025 IndiSanté. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const icon = question.querySelector('i');
+
+                    answer.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+```

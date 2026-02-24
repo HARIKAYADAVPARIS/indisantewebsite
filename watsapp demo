@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Healthcare Demo - WhatsApp Integration</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light grey background */
+        }
+        /* Custom scrollbar for message area */
+        .message-area::-webkit-scrollbar {
+            width: 8px;
+        }
+        .message-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .message-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .message-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-8">
+
+    <div class="flex flex-col lg:flex-row gap-6 max-w-6xl w-full bg-white rounded-xl shadow-2xl p-6 sm:p-8 md:p-10">
+
+        <!-- WhatsApp Simulation Pane -->
+        <div class="flex-1 bg-gradient-to-br from-green-400 to-green-600 rounded-lg shadow-xl overflow-hidden flex flex-col min-h-[500px] lg:min-h-[650px]">
+            <div class="bg-green-700 text-white p-4 sm:p-5 text-center text-xl sm:text-2xl font-bold rounded-t-lg shadow-md">
+                WhatsApp Chat: AI Healthcare Assistant
+            </div>
+            <div id="chat-messages" class="message-area flex-1 p-4 sm:p-6 overflow-y-auto space-y-4">
+                <!-- Initial message -->
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-xl rounded-bl-none shadow-md max-w-[70%]">
+                        Welcome to our AI Healthcare Assistant! Type 'fever' to start the demo.
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 sm:p-5 bg-green-700 flex items-center gap-3 rounded-b-lg">
+                <input type="text" id="user-input" placeholder="Type your message..."
+                       class="flex-1 p-3 rounded-full border-none focus:outline-none focus:ring-2 focus:ring-green-300 text-gray-800"
+                       onkeydown="if(event.key === 'Enter') document.getElementById('send-btn').click();">
+                <button id="send-btn"
+                        class="bg-green-800 text-white p-3 rounded-full hover:bg-green-900 transition-colors duration-200 shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform rotate-45 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Backend Dashboard Pane -->
+        <div class="flex-1 bg-gray-50 rounded-lg shadow-xl overflow-hidden flex flex-col min-h-[500px] lg:min-h-[650px]">
+            <div class="bg-blue-600 text-white p-4 sm:p-5 text-center text-xl sm:text-2xl font-bold rounded-t-lg shadow-md">
+                AI Processing Dashboard
+            </div>
+            <div class="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4">
+                <div id="dashboard-content" class="text-gray-700">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3">Real-time Data Processing:</h3>
+                    <div id="status-card" class="bg-white p-4 rounded-lg shadow-sm mb-4">
+                        <p class="font-medium">Status: <span class="font-normal text-gray-500" id="current-status">Awaiting User Input</span></p>
+                    </div>
+                    <div id="extracted-data-card" class="bg-white p-4 rounded-lg shadow-sm border border-blue-100 hidden">
+                        <h4 class="font-semibold text-blue-700 mb-2">Extracted Patient Data:</h4>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Symptom: <span class="font-medium" id="data-symptom"></span></li>
+                            <li id="data-temp-row" class="hidden">Temperature: <span class="font-medium" id="data-temperature"></span></li>
+                            <li id="data-duration-row" class="hidden">Duration: <span class="font-medium" id="data-duration"></span></li>
+                        </ul>
+                    </div>
+                    <div id="ai-action-card" class="bg-white p-4 rounded-lg shadow-sm border border-green-100 mt-4 hidden">
+                        <h4 class="font-semibold text-green-700 mb-2">AI Recommended Action:</h4>
+                        <p id="ai-recommendation" class="font-medium"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 sm:p-5 bg-blue-600 text-white text-center rounded-b-lg">
+                <p class="text-sm">See how patient data is instantly structured for healthcare providers.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-2xl">
+        <div class="bg-white rounded-xl shadow-lg p-5 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-lg sm:text-xl font-semibold text-gray-800">Ready to see more?</p>
+            <button onclick="window.location.href='#contact'"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                Request a Full Live Demo
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        // DOM Elements
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const currentStatus = document.getElementById('current-status');
+        const extractedDataCard = document.getElementById('extracted-data-card');
+        const dataSymptom = document.getElementById('data-symptom');
+        const dataTemperature = document.getElementById('data-temperature');
+        const dataDuration = document.getElementById('data-duration');
+        const dataTempRow = document.getElementById('data-temp-row');
+        const dataDurationRow = document.getElementById('data-duration-row');
+        const aiActionCard = document.getElementById('ai-action-card');
+        const aiRecommendation = document.getElementById('ai-recommendation');
+
+        // Demo State
+        let demoStep = 0; // 0: initial, 1: awaiting fever, 2: awaiting temp/duration, 3: completed
+        const expectedInput = {
+            0: 'fever',
+            1: /^\d+(\.\d+)? for \d+ day(s)?$/i // Regex for "39.5 for 2 days" etc.
+        };
+
+        /**
+         * Adds a message to the chat interface.
+         * @param {string} text - The message text.
+         * @param {string} sender - 'user' or 'ai'.
+         */
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('flex', 'mb-2');
+
+            if (sender === 'user') {
+                messageDiv.classList.add('justify-end');
+                messageDiv.innerHTML = `
+                    <div class="bg-blue-500 text-white p-3 rounded-xl rounded-br-none shadow-md max-w-[70%]">
+                        ${text}
+                    </div>
+                `;
+            } else { // sender === 'ai'
+                messageDiv.classList.add('justify-start');
+                messageDiv.innerHTML = `
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-xl rounded-bl-none shadow-md max-w-[70%]">
+                        ${text}
+                    </div>
+                `;
+            }
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        }
+
+        /**
+         * Updates the status and extracted data in the dashboard.
+         * @param {string} statusText - The current status message.
+         * @param {object} extractedData - Object with symptom, temperature, duration.
+         */
+        function updateDashboard(statusText, extractedData = {}) {
+            currentStatus.textContent = statusText;
+
+            if (extractedData.symptom) {
+                extractedDataCard.classList.remove('hidden');
+                dataSymptom.textContent = extractedData.symptom;
+            }
+            if (extractedData.temperature) {
+                dataTempRow.classList.remove('hidden');
+                dataTemperature.textContent = extractedData.temperature;
+            }
+            if (extractedData.duration) {
+                dataDurationRow.classList.remove('hidden');
+                dataDuration.textContent = extractedData.duration;
+            }
+        }
+
+        /**
+         * Simulates the AI's processing and response.
+         * @param {string} type - 'fever-response' or 'final-recommendation'.
+         * @param {object} data - Data to update dashboard with.
+         */
+        function simulateAIResponse(type, data = {}) {
+            // Introduce a slight delay for realism
+            setTimeout(() => {
+                if (type === 'fever-response') {
+                    addMessage("Thank you for reaching out! To help us understand better, could you tell us your current temperature and how long you've had the fever?", 'ai');
+                    updateDashboard("Processing Symptom...", data);
+                    setTimeout(() => {
+                         updateDashboard("Awaiting more details...", data);
+                    }, 500);
+                    userInput.placeholder = "E.g., '39.5 for 2 days'";
+                } else if (type === 'final-recommendation') {
+                    const temp = data.temperature;
+                    const duration = data.duration;
+                    const recommendationText = `Given your temperature of ${temp} for ${duration}, we recommend seeking medical advice. Would you like us to help you schedule a virtual consultation or find a nearby clinic?`;
+                    addMessage(recommendationText, 'ai');
+                    updateDashboard("Generating Recommendation...", data);
+                    setTimeout(() => {
+                        aiActionCard.classList.remove('hidden');
+                        aiRecommendation.textContent = `Recommendation: Seek Medical Advice & Schedule Consultation`;
+                        updateDashboard("Demo Complete!", data);
+                        userInput.disabled = true;
+                        sendBtn.disabled = true;
+                        userInput.placeholder = "Demo completed.";
+                    }, 1000);
+                }
+            }, 700); // Simulate network/processing delay
+        }
+
+        /**
+         * Handles user input and advances the demo state.
+         */
+        sendBtn.addEventListener('click', () => {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            userInput.value = ''; // Clear input
+
+            if (demoStep === 0) { // Awaiting 'fever'
+                if (message.toLowerCase() === expectedInput[0]) {
+                    demoStep = 1;
+                    simulateAIResponse('fever-response', { symptom: 'Fever' });
+                } else {
+                    addMessage("Please type 'fever' to start the demo.", 'ai');
+                }
+            } else if (demoStep === 1) { // Awaiting temperature and duration
+                if (expectedInput[1].test(message)) {
+                    demoStep = 2; // Demo completed for this flow
+                    const parts = message.toLowerCase().split(' for ');
+                    const temp = parts[0];
+                    const duration = parts[1];
+                    simulateAIResponse('final-recommendation', {
+                        symptom: 'Fever',
+                        temperature: temp,
+                        duration: duration
+                    });
+                } else {
+                    addMessage("Please enter your temperature and duration, e.g., '39.5 for 2 days'.", 'ai');
+                }
+            }
+        });
+
+        // Initialize dashboard state
+        updateDashboard("Awaiting User Input");
+    </script>
+</body>
+</html>
