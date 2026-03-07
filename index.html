@@ -45,7 +45,6 @@
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #10b981; cursor: pointer; margin-top: -8px; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: #334155; border-radius: 1.3px; }
 
-        /* Scribe UI Additions */
         #transcript-display, #note-display {
             min-height: 100px;
             max-height: 150px;
@@ -92,7 +91,7 @@
                     <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-200 font-medium">Seamless clinical care for immigrants in Europe. Powered by Azure AI, built for Swiss compliance.</p>
                     <div class="mt-12 flex flex-col md:flex-row justify-center gap-4">
                         <a href="#waitlist" class="brand-button text-lg font-bold py-4 px-10 rounded-full shadow-2xl transform hover:-translate-y-1 transition-all">Get Started</a>
-                        <a href="#how-it-works" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-lg font-bold py-4 px-10 rounded-full border border-white/20 transition-all">Watch Demo</a>
+                        <button id="launch-demo-btn" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-lg font-bold py-4 px-10 rounded-full border border-white/20 transition-all">Watch Demo</button>
                     </div>
                 </div>
             </section>
@@ -208,9 +207,6 @@
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Revenue Recovered</p>
                                 <p class="text-5xl font-black text-emerald-400 italic">CHF <span id="roi-money">4,845</span></p>
                             </div>
-                            <div class="col-span-2 p-6 bg-slate-800 rounded-3xl border border-slate-700">
-                                <p class="text-xs italic text-slate-500 leading-relaxed">*Calculation based on 20 working days/month and 80% reduction in documentation time using IndiSanté Scribe.</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,7 +220,7 @@
                         <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden mb-10 border border-slate-100">
                             <img src="https://i.imgur.com/gK2xT9z.png" alt="Product Mockup" class="w-full h-auto">
                         </div>
-                        <button id="launch-demo-btn" class="brand-button inline-block text-xl font-bold py-5 px-12 rounded-full shadow-xl hover:scale-105 transition-transform">Launch Simulation</button>
+                        <button id="launch-demo-btn-main" class="brand-button inline-block text-xl font-bold py-5 px-12 rounded-full shadow-xl hover:scale-105 transition-transform">Launch Simulation</button>
                     </div>
                 </div>
             </section>
@@ -293,7 +289,8 @@
                     <div id="note-display" class="bg-blue-50 border-blue-200 text-blue-800">Clinical SOAP note will appear here...</div>
                     
                     <button id="start-scribe-btn" onclick="startIndiSanteScribe()" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-colors flex items-center justify-center gap-3">
-                        <span class="w-3 h-3 bg-white rounded-full animate-pulse"></span> Start Audio Capture
+                        <span id="listening-indicator" class="hidden w-3 h-3 bg-white rounded-full animate-pulse"></span> 
+                        <span id="btn-text">Start Audio Capture</span>
                     </button>
                     <p class="text-[10px] text-slate-400 italic">Simulating secure HIPAA/FADP connection to Azure...</p>
                 </div>
@@ -313,11 +310,11 @@
         function updateROI() {
             const patients = parseInt(pRange.value);
             const timePerPatient = parseInt(tRange.value);
-            pCount.innerText = patients;
-            tCount.innerText = timePerPatient;
+            if (pCount) pCount.innerText = patients;
+            if (tCount) tCount.innerText = timePerPatient;
             const monthlySavedHours = Math.round((patients * (timePerPatient * 0.8) * 20) / 60);
-            roiHours.innerText = monthlySavedHours;
-            roiMoney.innerText = (monthlySavedHours * 85).toLocaleString();
+            if (roiHours) roiHours.innerText = monthlySavedHours;
+            if (roiMoney) roiMoney.innerText = (monthlySavedHours * 85).toLocaleString();
         }
 
         pRange?.addEventListener('input', updateROI);
@@ -325,75 +322,96 @@
         updateROI();
 
         // Modal Logic
-        const launchBtn = document.getElementById('launch-demo-btn');
         const demoModal = document.getElementById('demo-modal');
+        const openBtnHero = document.getElementById('launch-demo-btn');
+        const openBtnMain = document.getElementById('launch-demo-btn-main');
         const closeBtn = document.getElementById('close-demo-btn');
 
-        launchBtn?.addEventListener('click', () => demoModal.classList.remove('hidden'));
-        closeBtn?.addEventListener('click', () => demoModal.classList.add('hidden'));
+        const toggleModal = (show) => {
+            if (show) demoModal.classList.remove('hidden');
+            else demoModal.classList.add('hidden');
+        };
+
+        openBtnHero?.addEventListener('click', () => toggleModal(true));
+        openBtnMain?.addEventListener('click', () => toggleModal(true));
+        closeBtn?.addEventListener('click', () => toggleModal(false));
 
         // --- AZURE FUNCTIONAL LOGIC ---
-        // REPLACE with your credentials for testing
-        const AZURE_SPEECH_KEY = "YOUR_SPEECH_KEY"; 
-        const AZURE_OPENAI_KEY = "YOUR_OPENAI_KEY";
-        const AZURE_OPENAI_ENDPOINT = "YOUR_AZURE_OPENAI_ENDPOINT";
-
-        const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, "switzerlandnorth");
-        speechConfig.speechRecognitionLanguage = "en-IN"; // Optimized for Hinglish
+        // Enter your credentials from Azure Portal here
+        const AZURE_SPEECH_KEY = "8togNI80XxmBhTrTc8oxzuyoeBqFZU9ISxNY8OHkURk0YSkRV4G1JQQJ99CCACI8hq2XJ3w3AAAYACOGqnP8"; 
+        const AZURE_REGION = "switzerlandnorth"; // Based on your 'indisante-speech' location
+        const AZURE_OPENAI_KEY = "5cUWhpDPisFFoSD17zsPDKAP1FOlggwPyuQh4wp6UPh2hls0ZbZwJQQJ99CCACI8hq2XJ3w3AAABACOGOsEc";
+        const AZURE_OPENAI_ENDPOINT = "https://indisante-brain.openai.azure.com/";
 
         let recognizer;
         let fullTranscript = "";
 
         async function startIndiSanteScribe() {
             const btn = document.getElementById('start-scribe-btn');
+            const btnText = document.getElementById('btn-text');
+            const indicator = document.getElementById('listening-indicator');
             const display = document.getElementById('transcript-display');
             
-            btn.innerText = "Listening...";
+            btnText.innerText = "Listening...";
+            indicator.classList.remove('hidden');
             btn.classList.replace('bg-emerald-600', 'bg-red-600');
 
             try {
+                // Initialize Speech SDK
+                const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, AZURE_REGION);
+                speechConfig.speechRecognitionLanguage = "en-IN"; // Optimized for Indo-European accents
+
                 const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
                 recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
 
+                // Update UI as speech is recognized
                 recognizer.recognizing = (s, e) => {
-                    display.innerText = e.result.text;
+                    display.innerText = fullTranscript + e.result.text;
                 };
 
                 recognizer.recognized = (s, e) => {
                     if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
                         fullTranscript += e.result.text + " ";
                         display.innerText = fullTranscript;
-                        // Automatically generate clinical note
+                        // Auto-generate SOAP note after each finalized segment
                         generateClinicalNote(fullTranscript);
                     }
                 };
 
                 recognizer.startContinuousRecognitionAsync();
             } catch (err) {
-                console.error("Error starting scribe:", err);
-                display.innerText = "Check API Credentials in Script block.";
+                console.error("Speech Error:", err);
+                display.innerText = "Check Azure Speech credentials in the script block.";
             }
         }
 
         async function generateClinicalNote(text) {
             const noteBox = document.getElementById('note-display');
-            noteBox.innerText = "Extracting SOAP note...";
+            noteBox.innerText = "AI is extracting SOAP note...";
 
             try {
+                // Call Azure OpenAI inference endpoint
                 const response = await fetch(AZURE_OPENAI_ENDPOINT, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "api-key": AZURE_OPENAI_KEY },
+                    headers: { 
+                        "Content-Type": "application/json", 
+                        "api-key": AZURE_OPENAI_KEY 
+                    },
                     body: JSON.stringify({
                         messages: [
-                            { role: "system", content: "You are a medical scribe. Convert this Hinglish transcript into a professional English SOAP note." },
+                            { role: "system", content: "You are a professional medical scribe. Convert this transcript into a structured English SOAP note (Subjective, Objective, Assessment, Plan)." },
                             { role: "user", content: text }
-                        ]
+                        ],
+                        max_tokens: 1000
                     })
                 });
                 const data = await response.json();
-                noteBox.innerText = data.choices[0].message.content;
+                if (data.choices && data.choices[0]) {
+                    noteBox.innerText = data.choices[0].message.content;
+                }
             } catch (err) {
-                noteBox.innerText = "SOAP extraction simulation complete. (Connect Backend for live results)";
+                console.error("AI Note Error:", err);
+                noteBox.innerText = "Transcript captured. SOAP extraction requires a valid OpenAI endpoint key.";
             }
         }
     </script>
