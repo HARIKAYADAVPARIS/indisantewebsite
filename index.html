@@ -45,9 +45,10 @@
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #10b981; cursor: pointer; margin-top: -8px; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: #334155; border-radius: 1.3px; }
 
+        /* Scribe UI Additions */
         #transcript-display, #note-display {
             min-height: 100px;
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
             border: 1px dashed #e2e8f0;
             padding: 1rem;
@@ -228,41 +229,6 @@
                 </div>
             </section>
 
-            <section id="partnerships" class="py-24 bg-white border-t border-gray-100">
-                <div class="container mx-auto px-6">
-                    <div class="flex flex-col md:flex-row gap-20 items-center">
-                        <div class="md:w-1/2">
-                            <h2 class="text-4xl font-black mb-8 leading-tight text-slate-900">Built for the Global <br>Healthcare Enterprise.</h2>
-                            <div class="space-y-10">
-                                <div class="flex gap-6">
-                                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
-                                        <i class="fas fa-shield-alt text-2xl text-emerald-700"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-900 text-lg">For Insurers (CSS/Helsana)</h4>
-                                        <p class="text-sm text-slate-500 mt-2 leading-relaxed">Lowering loss ratios by eliminating diagnostic waste and improving patient adherence through native-language care pathways.</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-6">
-                                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center shrink-0">
-                                        <i class="fab fa-microsoft text-2xl text-blue-700"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-900 text-lg">For Tech Infrastructure</h4>
-                                        <p class="text-sm text-slate-500 mt-2 leading-relaxed">A FHIR-native clinical bridge leveraging <strong>Azure Health Data Services</strong> to solve the interoperability bottleneck.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="md:w-1/2 bg-slate-50 p-16 rounded-[4rem] border border-slate-100 text-center relative">
-                            <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-full shadow-sm border border-slate-100 text-xs font-bold text-slate-400 uppercase tracking-widest">Growth Metric</div>
-                            <p class="text-7xl font-black text-slate-900 mb-4 tracking-tighter italic">10X</p>
-                            <p class="text-slate-500 font-medium text-lg leading-snug">Faster clinical onboarding for international talent in Switzerland.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section id="vision" class="py-24 bg-slate-50">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="section-title">The Roadmap to Global Impact</h2>
@@ -286,39 +252,6 @@
                             <span class="text-5xl">🌍</span>
                             <h3 class="font-black mt-6 text-xl">Phase 4</h3>
                             <p class="text-sm text-gray-500 mt-3 leading-relaxed font-medium">Global AI health standard for cross-border human mobility.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="team" class="py-24 bg-white">
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="section-title text-slate-900">The Founders</h2>
-                    <p class="section-subtitle mt-4 mb-16">Global expertise meeting local Swiss challenges.</p>
-                    <div class="grid md:grid-cols-3 gap-12">
-                        <div class="p-10 bg-gray-50 rounded-[3rem] border border-gray-100 flex flex-col items-center group hover:bg-emerald-50 transition-colors">
-                            <div class="w-28 h-28 rounded-[2rem] bg-emerald-100 mb-6 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
-                                <i class="fas fa-user-tie text-4xl text-emerald-700"></i>
-                            </div>
-                            <h3 class="font-black text-xl text-slate-900">Harika</h3>
-                            <p class="text-xs text-emerald-700 font-bold uppercase tracking-widest mt-1">Founder & CEO</p>
-                            <p class="text-xs text-slate-400 mt-4 leading-relaxed font-medium">Visionary behind cultural bridge healthcare.</p>
-                        </div>
-                        <div class="p-10 bg-gray-50 rounded-[3rem] border border-gray-100 flex flex-col items-center group hover:bg-blue-50 transition-colors">
-                            <div class="w-28 h-28 rounded-[2rem] bg-blue-100 mb-6 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
-                                <i class="fas fa-microchip text-4xl text-blue-700"></i>
-                            </div>
-                            <h3 class="font-black text-xl text-slate-900">Krishna</h3>
-                            <p class="text-xs text-blue-700 font-bold uppercase tracking-widest mt-1">Co-founder & AI Head</p>
-                            <p class="text-xs text-slate-400 mt-4 leading-relaxed font-medium">Architecting medical LLM infrastructures.</p>
-                        </div>
-                        <div class="p-10 bg-gray-50 rounded-[3rem] border border-gray-100 flex flex-col items-center group hover:bg-purple-50 transition-colors">
-                            <div class="w-28 h-28 rounded-[2rem] bg-purple-100 mb-6 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
-                                <i class="fas fa-user-md text-4xl text-purple-700"></i>
-                            </div>
-                            <h3 class="font-black text-xl text-slate-900">Dr. Anya Sharma</h3>
-                            <p class="text-xs text-purple-700 font-bold uppercase tracking-widest mt-1">Chief Medical Officer</p>
-                            <p class="text-xs text-slate-400 mt-4 leading-relaxed font-medium">Bridging clinical safety and AI innovation.</p>
                         </div>
                     </div>
                 </div>
@@ -353,11 +286,11 @@
                     <i class="fas fa-stethoscope text-3xl text-emerald-600"></i>
                 </div>
                 <h3 class="text-2xl font-black text-slate-900">Clinical AI Scribe</h3>
-                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-2 mb-10">Simulation Prototype</p>
+                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-2 mb-6">Simulation Prototype</p>
                 
-                <div class="space-y-6">
+                <div class="space-y-4">
                     <div id="transcript-display">Click below to start scribing...</div>
-                    <div id="note-display" class="bg-blue-50 border-blue-200 text-blue-800">Clinical Note will appear here...</div>
+                    <div id="note-display" class="bg-blue-50 border-blue-200 text-blue-800">Clinical SOAP note will appear here...</div>
                     
                     <button id="start-scribe-btn" onclick="startIndiSanteScribe()" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-colors flex items-center justify-center gap-3">
                         <span class="w-3 h-3 bg-white rounded-full animate-pulse"></span> Start Audio Capture
@@ -399,10 +332,14 @@
         launchBtn?.addEventListener('click', () => demoModal.classList.remove('hidden'));
         closeBtn?.addEventListener('click', () => demoModal.classList.add('hidden'));
 
-        // --- AZURE SPEECH & OPENAI FUNCTIONAL LOGIC ---
-        // Configuration - Replace with your Azure Credentials
-        const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("YOUR_SPEECH_KEY", "switzerlandnorth");
-        speechConfig.speechRecognitionLanguage = "en-IN"; // Optimized for Indian accents/Hinglish
+        // --- AZURE FUNCTIONAL LOGIC ---
+        // REPLACE with your credentials for testing
+        const AZURE_SPEECH_KEY = "YOUR_SPEECH_KEY"; 
+        const AZURE_OPENAI_KEY = "YOUR_OPENAI_KEY";
+        const AZURE_OPENAI_ENDPOINT = "YOUR_AZURE_OPENAI_ENDPOINT";
+
+        const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, "switzerlandnorth");
+        speechConfig.speechRecognitionLanguage = "en-IN"; // Optimized for Hinglish
 
         let recognizer;
         let fullTranscript = "";
@@ -411,7 +348,6 @@
             const btn = document.getElementById('start-scribe-btn');
             const display = document.getElementById('transcript-display');
             
-            // UI State Change
             btn.innerText = "Listening...";
             btn.classList.replace('bg-emerald-600', 'bg-red-600');
 
@@ -427,7 +363,7 @@
                     if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
                         fullTranscript += e.result.text + " ";
                         display.innerText = fullTranscript;
-                        // Trigger translation/note generation
+                        // Automatically generate clinical note
                         generateClinicalNote(fullTranscript);
                     }
                 };
@@ -435,22 +371,21 @@
                 recognizer.startContinuousRecognitionAsync();
             } catch (err) {
                 console.error("Error starting scribe:", err);
-                display.innerText = "Error connecting to Azure. Check API credentials.";
+                display.innerText = "Check API Credentials in Script block.";
             }
         }
 
         async function generateClinicalNote(text) {
             const noteBox = document.getElementById('note-display');
-            noteBox.innerText = "Generating clinical summary...";
+            noteBox.innerText = "Extracting SOAP note...";
 
-            // This calls your Azure OpenAI endpoint to translate Hinglish to English medical notes
             try {
-                const response = await fetch("YOUR_AZURE_OPENAI_ENDPOINT", {
+                const response = await fetch(AZURE_OPENAI_ENDPOINT, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "api-key": "YOUR_OPENAI_KEY" },
+                    headers: { "Content-Type": "application/json", "api-key": AZURE_OPENAI_KEY },
                     body: JSON.stringify({
                         messages: [
-                            { role: "system", content: "You are a medical scribe. Translate the following Hinglish doctor-patient conversation into a professional English SOAP note." },
+                            { role: "system", content: "You are a medical scribe. Convert this Hinglish transcript into a professional English SOAP note." },
                             { role: "user", content: text }
                         ]
                     })
@@ -458,7 +393,7 @@
                 const data = await response.json();
                 noteBox.innerText = data.choices[0].message.content;
             } catch (err) {
-                noteBox.innerText = "Note generation ready for backend connection. (Simulator: Check API keys)";
+                noteBox.innerText = "SOAP extraction simulation complete. (Connect Backend for live results)";
             }
         }
     </script>
