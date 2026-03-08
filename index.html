@@ -58,6 +58,11 @@
             text-align: left;
             margin-bottom: 1rem;
         }
+
+        .mock-window { background: #1e293b; border-radius: 1rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .mock-header { background: #334155; padding: 10px 15px; display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .mock-body { padding: 20px; background: #0f172a; min-height: 200px; }
     </style>
 </head>
 <body class="antialiased bg-white">
@@ -75,7 +80,6 @@
                     <a href="#azure-tech" class="text-gray-600 hover:text-gray-900">Clinical AI</a>
                     <a href="#vision" class="text-gray-600 hover:text-gray-900">Vision</a>
                     <a href="#team" class="text-gray-600 hover:text-gray-900">Team</a>
-                    <a href="#partnerships" class="text-gray-600 hover:text-gray-900">Enterprise</a>
                 </nav>
                 <a href="#waitlist" class="brand-button font-semibold px-5 py-2 rounded-full text-sm">Join Waitlist</a>
             </div>
@@ -216,11 +220,80 @@
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="section-title">The IndiSanté Experience</h2>
                     <p class="section-subtitle mt-4">Witness how we bridge the cultural and clinical gap.</p>
-                    <div class="mt-16 max-w-2xl mx-auto bg-slate-50 p-12 rounded-[3.5rem] border border-slate-100 shadow-inner">
-                        <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden mb-10 border border-slate-100">
-                            <img src="https://i.imgur.com/gK2xT9z.png" alt="Product Mockup" class="w-full h-auto">
+                    <div class="mt-16 max-w-3xl mx-auto bg-slate-50 p-12 rounded-[3.5rem] border border-slate-100 shadow-inner">
+                        <div class="mock-window mb-10 text-left">
+                            <div class="mock-header">
+                                <div class="dot bg-red-500"></div>
+                                <div class="dot bg-yellow-500"></div>
+                                <div class="dot bg-green-500"></div>
+                            </div>
+                            <div class="mock-body flex flex-col gap-4">
+                                <div class="flex items-center gap-4 border-b border-slate-700 pb-4">
+                                    <div class="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center"><i class="fas fa-user-md text-emerald-400"></i></div>
+                                    <div class="text-slate-300 text-sm font-mono">Clinician Portal v1.0 - Active session</div>
+                                </div>
+                                <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                                    <div class="text-xs text-emerald-400 mb-2 uppercase tracking-tighter">Real-time Transcription</div>
+                                    <div class="text-slate-400 italic text-sm">"Patient reports mild respiratory distress in French..."</div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 mt-2">
+                                    <div class="h-24 bg-slate-800/30 rounded border border-dashed border-slate-600 flex items-center justify-center"><span class="text-[10px] text-slate-500 uppercase">Hindi-English Audio</span></div>
+                                    <div class="h-24 bg-slate-800/30 rounded border border-dashed border-slate-600 flex items-center justify-center"><span class="text-[10px] text-slate-500 uppercase">German Translation</span></div>
+                                </div>
+                            </div>
                         </div>
                         <button id="launch-demo-btn-main" class="brand-button inline-block text-xl font-bold py-5 px-12 rounded-full shadow-xl hover:scale-105 transition-transform">Launch Simulation</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="team" class="py-24 bg-white">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="section-title">The Minds Behind IndiSanté</h2>
+                    <p class="section-subtitle mt-4 mb-16">Combining expertise in healthcare, AI, and global expansion.</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-12">
+                        <div class="group">
+                            <div class="relative mb-6 inline-block">
+                                <div class="w-48 h-48 rounded-[3rem] overflow-hidden border-4 border-emerald-50 shadow-xl group-hover:scale-105 transition-transform duration-300">
+                                    <img src="https://raw.githubusercontent.com/HARIKAYADAVPARIS/INDISANTE-WEBISTE/main/Harika%20Yadav%20Profile.jpeg" alt="Harika Yadav" class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute -bottom-2 -right-2 bg-emerald-600 text-white p-3 rounded-2xl shadow-lg">
+                                    <i class="fas fa-stethoscope"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900">Harika Yadav</h3>
+                            <p class="text-emerald-600 font-bold text-sm uppercase tracking-widest mt-1">Founder & CEO</p>
+                            <p class="mt-4 text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">Driving the vision of borderless healthcare for the Indian diaspora in Europe.</p>
+                        </div>
+
+                        <div class="group">
+                            <div class="relative mb-6 inline-block">
+                                <div class="w-48 h-48 rounded-[3rem] overflow-hidden border-4 border-blue-50 shadow-xl group-hover:scale-105 transition-transform duration-300">
+                                    <img src="https://raw.githubusercontent.com/HARIKAYADAVPARIS/INDISANTE-WEBISTE/main/Ravi%20Yadav%20Profile.jpeg" alt="Krrishi Yadav" class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute -bottom-2 -right-2 bg-blue-600 text-white p-3 rounded-2xl shadow-lg">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900">Krrishi Yadav</h3>
+                            <p class="text-blue-600 font-bold text-sm uppercase tracking-widest mt-1">Co-Founder & CTO</p>
+                            <p class="mt-4 text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">Architecting the Azure-powered AI infrastructure and Swiss compliance framework.</p>
+                        </div>
+
+                        <div class="group">
+                            <div class="relative mb-6 inline-block">
+                                <div class="w-48 h-48 rounded-[3rem] overflow-hidden border-4 border-purple-50 shadow-xl group-hover:scale-105 transition-transform duration-300">
+                                    <div class="w-full h-full bg-slate-200 flex items-center justify-center"><i class="fas fa-user text-5xl text-slate-400"></i></div>
+                                </div>
+                                <div class="absolute -bottom-2 -right-2 bg-purple-600 text-white p-3 rounded-2xl shadow-lg">
+                                    <i class="fas fa-globe-europe"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900">Anya Sharma</h3>
+                            <p class="text-purple-600 font-bold text-sm uppercase tracking-widest mt-1">Strategy & Growth</p>
+                            <p class="mt-4 text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">Managing European partnerships and ensuring cultural sensitivity in clinical care.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -268,6 +341,10 @@
                         <img src="https://raw.githubusercontent.com/HARIKAYADAVPARIS/INDISANTE-WEBISTE/main/IndiSante%CC%81%20Logo_%20Global%20Healthcare%20Connection.png" alt="Logo" class="h-8">
                         <span class="text-xl font-bold text-white">IndiSanté</span>
                     </div>
+                    <div class="flex items-center space-x-6 text-2xl">
+                        <a href="https://www.linkedin.com/company/indisante" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/indisante" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                    </div>
                     <p class="text-xs uppercase tracking-[0.3em] font-medium">&copy; 2026 IndiSanté. Engineered for the Swiss Health Future.</p>
                 </div>
             </footer>
@@ -282,7 +359,7 @@
                     <i class="fas fa-stethoscope text-3xl text-emerald-600"></i>
                 </div>
                 <h3 class="text-2xl font-black text-slate-900">Clinical AI Scribe</h3>
-                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-2 mb-6">Matthias Demo (FR -> DE)</p>
+                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-2 mb-6">Consultation Simulation (FR -> DE)</p>
                 
                 <div class="space-y-4">
                     <div id="transcript-display">Click below to start scribing...</div>
@@ -299,7 +376,7 @@
     </div>
 
     <script>
-        // ROI Calculator Logic
+        // ROI Calculator
         const pRange = document.getElementById('patient-range');
         const tRange = document.getElementById('time-range');
         const pCount = document.getElementById('patient-count');
@@ -316,99 +393,50 @@
             if (roiHours) roiHours.innerText = monthlySavedHours;
             if (roiMoney) roiMoney.innerText = (monthlySavedHours * 85).toLocaleString();
         }
-
         pRange?.addEventListener('input', updateROI);
         tRange?.addEventListener('input', updateROI);
         updateROI();
 
-        // Modal Logic
+        // Modal Controls
         const demoModal = document.getElementById('demo-modal');
-        const openBtnHero = document.getElementById('launch-demo-btn');
-        const openBtnMain = document.getElementById('launch-demo-btn-main');
-        const closeBtn = document.getElementById('close-demo-btn');
-
         const toggleModal = (show) => {
             if (show) demoModal.classList.remove('hidden');
-            else {
-                demoModal.classList.add('hidden');
-                stopScribe();
-            }
+            else { demoModal.classList.add('hidden'); stopScribe(); }
         };
-
-        openBtnHero?.addEventListener('click', () => toggleModal(true));
-        openBtnMain?.addEventListener('click', () => toggleModal(true));
-        closeBtn?.addEventListener('click', () => toggleModal(false));
+        document.getElementById('launch-demo-btn')?.addEventListener('click', () => toggleModal(true));
+        document.getElementById('launch-demo-btn-main')?.addEventListener('click', () => toggleModal(true));
+        document.getElementById('close-demo-btn')?.addEventListener('click', () => toggleModal(false));
 
         // --- AZURE FUNCTIONAL LOGIC (FR -> DE Demo) ---
         const AZURE_SPEECH_KEY = "8togNI80XxmBhTrTc8oxzuyoeBqFZU9ISxNY8OHkURk0YSkRV4G1JQQJ99CCACI8hq2XJ3w3AAAYACOGqnP8"; 
         const AZURE_REGION = "switzerlandnorth"; 
         const AZURE_OPENAI_KEY = "5cUWhpDPisFFoSD17zsPDKAP1FOlggwPyuQh4wp6UPh2hls0ZbZwJQQJ99CCACI8hq2XJ3w3AAABACOGOsEc";
-        const AZURE_OPENAI_ENDPOINT = "https://indisante-brain.openai.azure.com/";
+        
+        // Use the deployment name you found: gpt-4o-scribe
+        const DEPLOYMENT_NAME = "gpt-4o-scribe"; 
+        const AZURE_OPENAI_ENDPOINT = `https://indisante-brain.openai.azure.com/openai/deployments/${DEPLOYMENT_NAME}/chat/completions?api-version=2024-02-15-preview`;
 
-        let recognizer;
-        let fullTranscript = "";
-        let isScribing = false;
+        let recognizer, fullTranscript = "", isScribing = false;
 
         async function startIndiSanteScribe() {
-            if (isScribing) {
-                stopScribe();
-                return;
-            }
-
-            const btn = document.getElementById('start-scribe-btn');
-            const btnText = document.getElementById('btn-text');
-            const indicator = document.getElementById('listening-indicator');
-            const display = document.getElementById('transcript-display');
-
-            fullTranscript = "";
-            display.innerText = "Listening (French)...";
-            btnText.innerText = "Stop Capture";
-            indicator.classList.remove('hidden');
-            btn.classList.replace('bg-emerald-600', 'bg-red-600');
-            isScribing = true;
+            if (isScribing) { stopScribe(); return; }
+            const btn = document.getElementById('start-scribe-btn'), btnText = document.getElementById('btn-text'), indicator = document.getElementById('listening-indicator'), display = document.getElementById('transcript-display');
+            fullTranscript = ""; display.innerText = "Listening..."; btnText.innerText = "Stop Capture"; indicator.classList.remove('hidden'); btn.classList.replace('bg-emerald-600', 'bg-red-600'); isScribing = true;
 
             try {
                 const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, AZURE_REGION);
                 speechConfig.speechRecognitionLanguage = "fr-FR";
-
-                const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
-                recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
-
-                recognizer.recognizing = (s, e) => {
-                    display.innerText = fullTranscript + e.result.text;
-                };
-
-                recognizer.recognized = (s, e) => {
-                    if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-                        fullTranscript += e.result.text + " ";
-                        display.innerText = fullTranscript;
-                    }
-                };
-
+                recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, SpeechSDK.AudioConfig.fromDefaultMicrophoneInput());
+                recognizer.recognizing = (s, e) => { display.innerText = fullTranscript + e.result.text; };
+                recognizer.recognized = (s, e) => { if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) { fullTranscript += e.result.text + " "; display.innerText = fullTranscript; } };
                 recognizer.startContinuousRecognitionAsync();
-            } catch (err) {
-                console.error("Speech Error:", err);
-                display.innerText = "Check Credentials in script block.";
-                stopScribe();
-            }
+            } catch (err) { display.innerText = "Check Azure config."; isScribing = false; }
         }
 
         function stopScribe() {
-            if (recognizer) {
-                recognizer.stopContinuousRecognitionAsync(() => {
-                    recognizer.close();
-                    recognizer = undefined;
-                    generateClinicalNote(fullTranscript);
-                });
-            }
-            const btn = document.getElementById('start-scribe-btn');
-            const btnText = document.getElementById('btn-text');
-            const indicator = document.getElementById('listening-indicator');
-            if (btn) {
-                btnText.innerText = "Start Capture (French)";
-                indicator.classList.add('hidden');
-                btn.classList.replace('bg-red-600', 'bg-emerald-600');
-            }
+            if (recognizer) { recognizer.stopContinuousRecognitionAsync(() => { recognizer.close(); recognizer = undefined; generateClinicalNote(fullTranscript); }); }
+            const btn = document.getElementById('start-scribe-btn'), btnText = document.getElementById('btn-text'), indicator = document.getElementById('listening-indicator');
+            if (btn) { btnText.innerText = "Start Capture (French)"; indicator.classList.add('hidden'); btn.classList.replace('bg-red-600', 'bg-emerald-600'); }
             isScribing = false;
         }
 
@@ -416,23 +444,24 @@
             if (!text.trim()) return;
             const noteBox = document.getElementById('note-display');
             noteBox.innerText = "Generating German SOAP note...";
-
             try {
                 const response = await fetch(AZURE_OPENAI_ENDPOINT, {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "api-key": AZURE_OPENAI_KEY },
-                    body: JSON.stringify({
+                    body: JSON.stringify({ 
                         messages: [
-                            { role: "system", content: "You are a medical scribe. Translate this French transcript into a German (Deutsch) SOAP note (Subjektiv, Objektiv, Beurteilung, Plan)." },
+                            { role: "system", content: "You are a professional medical scribe. Summarize this French transcript into a structured German (Deutsch) SOAP note." }, 
                             { role: "user", content: text }
-                        ]
+                        ] 
                     })
                 });
                 const data = await response.json();
-                noteBox.innerText = data.choices[0].message.content;
-            } catch (err) {
-                noteBox.innerText = "SOAP extraction failed. Check OpenAI credentials.";
-            }
+                if (data.choices && data.choices[0]) {
+                    noteBox.innerText = data.choices[0].message.content;
+                } else {
+                    noteBox.innerText = "Error in AI response structure.";
+                }
+            } catch (err) { noteBox.innerText = "SOAP extraction failed."; }
         }
     </script>
 </body>
