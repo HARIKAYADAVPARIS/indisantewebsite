@@ -89,7 +89,7 @@
             <section class="hero-gradient text-white">
                 <div class="container mx-auto px-6 py-24 text-center">
                     <div class="inline-block px-4 py-1.5 mb-6 bg-white/10 rounded-full border border-white/20 backdrop-blur-sm text-xs font-bold uppercase tracking-widest">
-                        Bridging India & Europe
+                        Multilingual Health Infrastructure
                     </div>
                     <h1 class="text-4xl md:text-7xl font-extrabold leading-tight tracking-tight">Healthcare Without Borders.</h1>
                     <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-200 font-medium">Seamless clinical care for immigrants in Europe. Powered by Azure AI, built for Swiss compliance.</p>
@@ -115,7 +115,7 @@
                             <div class="grid gap-6">
                                 <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-red-600 shadow-sm group hover:bg-red-50 transition-colors">
                                     <h4 class="font-bold text-slate-900 mb-1">Insurance & KVG Alignment</h4>
-                                    <p class="text-sm text-slate-500">Direct API bridges for partners like <strong>CSS</strong> and <strong>Helsana</strong> to verify mandatory coverage.</p>
+                                    <p class="text-sm text-slate-500">Direct API bridges for institutional insurance partners to verify mandatory coverage without manual friction.</p>
                                 </div>
                                 <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-red-600 shadow-sm group hover:bg-red-50 transition-colors">
                                     <h4 class="font-bold text-slate-900 mb-1">HIN & TARMED Ready</h4>
@@ -141,7 +141,7 @@
                                     </div>
                                     <div class="p-5 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
                                         <p class="text-[10px] text-slate-400 font-bold uppercase mb-2">Security Standard</p>
-                                        <p class="text-sm text-white leading-snug">End-to-end AES-256 encryption with managed keys in <strong>Azure Key Vault</strong>.</p>
+                                        <p class="text-sm text-white leading-snug">End-to-end AES-256 encryption.</p>
                                     </div>
                                 </div>
                             </div>
@@ -341,10 +341,19 @@
                         <img src="https://raw.githubusercontent.com/HARIKAYADAVPARIS/INDISANTE-WEBISTE/main/IndiSante%CC%81%20Logo_%20Global%20Healthcare%20Connection.png" alt="Logo" class="h-8">
                         <span class="text-xl font-bold text-white">IndiSanté</span>
                     </div>
-                    <div class="flex items-center space-x-6 text-2xl">
-                        <a href="https://www.linkedin.com/company/indisante" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://www.instagram.com/indisante" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                    <div class="flex flex-col items-center md:items-end gap-4">
+                        <div class="flex items-center space-x-6 text-2xl">
+                            <a href="https://www.linkedin.com/company/indi-sante/posts/?feedView=all" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/indisante" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        </div>
+                        <div class="flex space-x-4 text-[10px] uppercase tracking-widest font-bold">
+                            <a href="/privacy" class="hover:text-white">Privacy Policy</a>
+                            <span class="text-slate-800">|</span>
+                            <a href="/terms" class="hover:text-white">Terms of Service</a>
+                        </div>
                     </div>
+                </div>
+                <div class="container mx-auto px-6 mt-8 text-center border-t border-white/5 pt-8">
                     <p class="text-xs uppercase tracking-[0.3em] font-medium">&copy; 2026 IndiSanté. Engineered for the Swiss Health Future.</p>
                 </div>
             </footer>
@@ -376,7 +385,6 @@
     </div>
 
     <script>
-        // ROI Calculator
         const pRange = document.getElementById('patient-range');
         const tRange = document.getElementById('time-range');
         const pCount = document.getElementById('patient-count');
@@ -397,7 +405,6 @@
         tRange?.addEventListener('input', updateROI);
         updateROI();
 
-        // Modal Controls
         const demoModal = document.getElementById('demo-modal');
         const toggleModal = (show) => {
             if (show) demoModal.classList.remove('hidden');
@@ -407,12 +414,9 @@
         document.getElementById('launch-demo-btn-main')?.addEventListener('click', () => toggleModal(true));
         document.getElementById('close-demo-btn')?.addEventListener('click', () => toggleModal(false));
 
-        // --- AZURE FUNCTIONAL LOGIC (FR -> DE Demo) ---
         const AZURE_SPEECH_KEY = "8togNI80XxmBhTrTc8oxzuyoeBqFZU9ISxNY8OHkURk0YSkRV4G1JQQJ99CCACI8hq2XJ3w3AAAYACOGqnP8"; 
         const AZURE_REGION = "switzerlandnorth"; 
         const AZURE_OPENAI_KEY = "5cUWhpDPisFFoSD17zsPDKAP1FOlggwPyuQh4wp6UPh2hls0ZbZwJQQJ99CCACI8hq2XJ3w3AAABACOGOsEc";
-        
-        // Use the deployment name you found: gpt-4o-scribe
         const DEPLOYMENT_NAME = "gpt-4o-scribe"; 
         const AZURE_OPENAI_ENDPOINT = `https://indisante-brain.openai.azure.com/openai/deployments/${DEPLOYMENT_NAME}/chat/completions?api-version=2024-02-15-preview`;
 
