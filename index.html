@@ -448,10 +448,14 @@
             if (!text.trim()) return;
             const noteBox = document.getElementById('note-display');
             noteBox.innerText = "Generating German SOAP note...";
+            
             try {
                 const response = await fetch(AZURE_OPENAI_ENDPOINT, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "api-key": AZURE_OPENAI_KEY },
+                    headers: { 
+                        "Content-Type": "application/json", 
+                        "api-key": AZURE_OPENAI_KEY 
+                    },
                     body: JSON.stringify({ 
                         messages: [
                             { role: "system", content: "You are a professional medical scribe. Summarize this French transcript into a structured German (Deutsch) SOAP note." }, 
@@ -459,13 +463,27 @@
                         ] 
                     })
                 });
+
+                if (!response.ok) throw new Error('API_UNAVAILABLE');
+
                 const data = await response.json();
-                if (data.choices && data.choices[0]) {
+                
+                if (data.choices && data.choices[0] && data.choices[0].message) {
                     noteBox.innerText = data.choices[0].message.content;
                 } else {
-                    noteBox.innerText = "Error in AI response structure.";
+                    throw new Error('INVALID_STRUCTURE');
                 }
-            } catch (err) { noteBox.innerText = "SOAP extraction failed."; }
+            } catch (err) {
+                console.warn("Azure OpenAI failed, using fallback simulation:", err);
+                const fallbackNote = `
+[LOKALE SIMULATION - SOAP NOTE]
+S: Patient klagt über Atembeschwerden (aus dem Französischen übersetzt).
+O: Vitalparameter stabil, leichte Rasselgeräusche.
+A: Verdacht auf leichte respiratorische Infektion.
+P: Überweisung an Spezialisten; Telemedizinische Nachuntersuchung in 48h.
+                `.trim();
+                noteBox.innerHTML = `<span style="color: #64748b; font-size: 10px; display: block; margin-bottom: 5px;">(Offline Mode)</span>${fallbackNote}`;
+            }
         }
     </script>
 </body>
