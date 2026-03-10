@@ -118,8 +118,8 @@
                                     <p class="text-sm text-slate-500">Direct API bridges for institutional insurance partners to verify mandatory coverage without manual friction.</p>
                                 </div>
                                 <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-red-600 shadow-sm group hover:bg-red-50 transition-colors">
-                                    <h4 class="font-bold text-slate-900 mb-1">HIN & TARMED Ready</h4>
-                                    <p class="text-sm text-slate-500">Encryption aligned with <strong>HIN</strong> standards and clinical notes mapped to <strong>TARMED</strong> codes.</p>
+                                    <h4 class="font-bold text-slate-900 mb-1">HIN, TARMED & TARDOC Ready</h4>
+                                    <p class="text-sm text-slate-500">Encryption aligned with <strong>HIN</strong> standards. Clinical notes are pre-mapped for the transition from <strong>TARMED</strong> to <strong>TARDOC</strong> billing entities.</p>
                                 </div>
                             </div>
                         </div>
@@ -174,8 +174,8 @@
                             <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-8">
                                 <i class="fas fa-microscope"></i>
                             </div>
-                            <h4 class="font-bold mb-4 text-xl">TARMED Coding</h4>
-                            <p class="text-sm text-slate-500 leading-relaxed">AI-assisted mapping of consultations to <strong>ICD-10</strong> and <strong>TARMED</strong> billing entities.</p>
+                            <h4 class="font-bold mb-4 text-xl">TARDOC / ICD-10 Coding</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed">AI-assisted mapping of consultations to <strong>ICD-10</strong> and the new <strong>TARDOC</strong> structure, ensuring future-proof billing accuracy.</p>
                         </div>
                     </div>
                 </div>
@@ -372,7 +372,7 @@
                 
                 <div class="space-y-4">
                     <div id="transcript-display">Click below to start scribing...</div>
-                    <div id="note-display" class="bg-blue-50 border-blue-200 text-blue-800">German SOAP note will appear here...</div>
+                    <div id="note-display" class="bg-blue-50 border-blue-200 text-blue-800">German SOAP note & TARDOC codes will appear here...</div>
                     
                     <button id="start-scribe-btn" onclick="startIndiSanteScribe()" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-colors flex items-center justify-center gap-3">
                         <span id="listening-indicator" class="hidden w-3 h-3 bg-white rounded-full animate-pulse"></span> 
@@ -447,7 +447,7 @@
         async function generateClinicalNote(text) {
             if (!text.trim()) return;
             const noteBox = document.getElementById('note-display');
-            noteBox.innerText = "Generating German SOAP note...";
+            noteBox.innerText = "Generating German SOAP note & TARDOC codes...";
             
             try {
                 const response = await fetch(AZURE_OPENAI_ENDPOINT, {
@@ -458,7 +458,10 @@
                     },
                     body: JSON.stringify({ 
                         messages: [
-                            { role: "system", content: "You are a professional medical scribe. Summarize this French transcript into a structured German (Deutsch) SOAP note." }, 
+                            { 
+                                role: "system", 
+                                content: "You are a professional Swiss medical scribe. Summarize this French transcript into a structured German (Deutsch) SOAP note and suggest relevant ICD-10 and TARDOC (Swiss outpatient billing) codes." 
+                            }, 
                             { role: "user", content: text }
                         ] 
                     })
@@ -476,13 +479,17 @@
             } catch (err) {
                 console.warn("Azure OpenAI failed, using fallback simulation:", err);
                 const fallbackNote = `
-[LOKALE SIMULATION - SOAP NOTE]
+[TARDOC SIMULATION - SOAP NOTE]
 S: Patient klagt über Atembeschwerden (aus dem Französischen übersetzt).
 O: Vitalparameter stabil, leichte Rasselgeräusche.
 A: Verdacht auf leichte respiratorische Infektion.
 P: Überweisung an Spezialisten; Telemedizinische Nachuntersuchung in 48h.
+------------------
+Mögliche TARDOC-Positionen:
+- 00.0010 (Grundkonsultation)
+- 00.0060 (Zuschlag für Telemedizin)
                 `.trim();
-                noteBox.innerHTML = `<span style="color: #64748b; font-size: 10px; display: block; margin-bottom: 5px;">(Offline Mode)</span>${fallbackNote}`;
+                noteBox.innerHTML = `<span style="color: #64748b; font-size: 10px; display: block; margin-bottom: 5px;">(TARDOC Offline Mode)</span>${fallbackNote}`;
             }
         }
     </script>
